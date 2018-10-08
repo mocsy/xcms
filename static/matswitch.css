@@ -1,0 +1,55 @@
+
+.material-switch > input[type="checkbox"] {
+    display: none;
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 1em;
+    width: 5em;  
+}
+
+.material-switch > label::before {
+    background: var(--red);
+    -webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+    content: '';
+    height: 2em;
+    position:absolute;
+    opacity: 0.3;
+    -webkit-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    width: 5em;
+}
+.material-switch > label::after {
+    background: rgb(255, 255, 255);
+    border-radius: 32px;
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 3em;
+    margin-left: -0.5em;
+    position: absolute;
+    margin-top: -0.5em;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    width: 3em;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: var(--green);
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: var(--light);
+    margin-left: 2.5em;
+}
+
+.material-switch > input[type="checkbox"]:disabled + label::before {
+    background: var(--grey);
+}
+.material-switch > input[type="checkbox"]:disabled + label::after {
+    background: var(--dark-grey);
+}

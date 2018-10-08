@@ -1,0 +1,62 @@
+@use crate::modules::navigation::{ Row, ListContext, PermissionSet };
+
+@(data: &[Row], ctx: &ListContext, perm: &PermissionSet)
+
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i> @ctx.head
+      <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="./add" role="button"><i class="fa fa-plus"></i>&nbsp;
+        New @ctx.title</a>
+    </div>
+    <div class="card-body" v-cloak>
+      @if ctx.search {
+      <input class="form-control" id="searchthis" type="text" placeholder="Search.." onkeyup="textTyped()">
+      }
+
+      @if perm.read {
+      <table class="table table-hover" id="list-table">
+        <caption>@ctx.head</caption>
+        <thead>
+          <tr>
+            @if let Some(row) = data.get(0) {
+            @for cell in row.cells.clone() {
+            @if cell.is_nullable {
+            <th is='sortable' id="title" column="@cell.title">@cell.title</th>
+            } else {
+            <th is='sortable' id="title" column="@cell.title">@cell.title *</th>
+            }
+            }
+            }
+            <th id="empty"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for row in data {
+          <tr id="listing-0">
+            @for cell in row.cells.clone() {
+            <td><b>@cell.content.title</b><br>
+              @cell.content.detail.0<br>
+              @cell.content.detail.1<br>
+              @cell.content.detail.2</td>
+            }
+            @for link in row.links.clone() {
+            <td>
+              @if perm.as_vec().contains(&link.clearance) {
+              <div class="col-auto no-gutters">
+                <a class="btn btn-sm btn-spinner btn-info" href="@link.url" title="@link.visual" role="button"
+                @if link.active { active }>
+                  <i class="fa @link.icon"></i>
+                </a>
+              </div>
+              }
+            </td>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+      } else {
+      <span>You have no permission to browse @ctx.head</span>
+      }
+    </div>
+  </div>

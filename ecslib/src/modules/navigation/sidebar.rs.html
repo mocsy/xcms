@@ -1,0 +1,11 @@
+@use crate::modules::navigation::Link;
+
+@(links: &[Link])
+
+<aside class="nav-sidebar col-12 col-sm-4 col-md-3 col-lg-2 bg-dark collapse show" id="togglingnavbar">
+  <nav class="nav flex-column">
+    @for lnk in links {
+      @lnk
+    }
+  </nav>
+</aside>

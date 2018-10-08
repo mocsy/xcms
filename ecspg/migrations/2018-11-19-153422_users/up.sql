@@ -1,0 +1,4 @@
+CREATE TABLE users (
+  id SERIAL8 PRIMARY KEY,
+  uuid UUID NOT NULL
+)

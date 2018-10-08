@@ -1,0 +1,65 @@
+@use crate::modules::navigation::{ EditableField, ListContext, PermissionSet, InputType };
+
+@(data: &[EditableField], ctx: &ListContext, perm: &PermissionSet)
+
+<div class="card">
+  <div class="card-header">
+    <i class="fa fa-align-justify"></i> @ctx.head
+    <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="./list" role="button"><i
+        class="fa fa-minus-square-o"></i>&nbsp;
+      Cancel</a>
+  </div>
+  @if perm.edit {
+  <form method="post">
+    <div class="card-body" v-cloak>
+      @for fld in data {
+      @if fld.input_type.eq(&InputType::Input) {
+      <div class="form-group">
+        @if fld.title.eq("Uuid") {
+        <input type="hidden" class="form-control" id="@fld.name" name="@fld.name" value="@fld.value" required>
+        } else {
+        <label for="@fld.name">@fld.title</label>
+        <input type="text" class="form-control" id="@fld.name" name="@fld.name" value="@fld.value" @if fld.required {
+          required }>
+        }
+      </div>
+      }
+      @if fld.input_type.eq(&InputType::Select) {
+      <div class="form-group">
+        <label for="@fld.name">@fld.title</label>
+        <select class="form-control" id="@fld.name" name="@fld.name" value="@fld.value" @if fld.required { required }>
+          <option>@fld.value</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      }
+      @if fld.input_type.eq(&InputType::TextArea) {
+      <div class="form-group">
+        <label for="@fld.name">@fld.title</label>
+        <textarea class="form-control" id="@fld.name" name="@fld.name" rows="3" @if fld.required { required
+          }>@fld.value</textarea>
+      </div>
+      }
+      }
+    </div>
+    @if data.is_empty() {
+    <div class="card-footer">
+      <span>This content does not exists</span>
+    </div>
+    } else {
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-download"></i>
+        Save
+      </button>
+    </div>
+    }
+  </form>
+  } else {
+  <span>You have no permission to browse @ctx.head</span>
+  }
+</div>

@@ -1,0 +1,15 @@
+@use crate::modules::meta::Meta;
+@use super::meta;
+
+@(content: &ToHtml, metaobj: &Meta)
+
+<!doctype html>
+<html lang="en">
+  <head>
+    @:meta(metaobj)
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    @content
+  </body>
+</html>

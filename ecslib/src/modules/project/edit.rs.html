@@ -1,0 +1,44 @@
+@use crate::modules::project::data::ProjectData;
+@(data: &ProjectData)
+
+<div class="card">
+  <div class="card-header">
+    <i class="fa fa-align-justify"></i> Project Editor
+    <a class="btn btn-primary btn-spinner btn-sm pull-right m-b-0" href="/project/list" role="button">
+      <i class="fa fa-minus-square-o"></i>&nbsp; Cancel
+    </a>
+  </div>
+
+  <form method="post">
+    <div class="card-body" v-cloak>
+      <div class="form-group">
+        <input type="hidden" class="form-control" id="uuid" name="uuid" value="@data.uuid" required />
+      </div>
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="@data.title" />
+      </div>
+
+      <div class="form-group">
+        <label for="content">Content</label>
+        <textarea class="form-control" id="content" name="content"
+          rows="3">@if let Some(cnt) = &data.content { @cnt }</textarea>
+      </div>
+
+      <div class="form-group">
+        <date-range prefix="ecs" start="@if let Some(start_date) = &data.ecs_start_date { @start_date }"
+          end="@if let Some(end_date) = &data.ecs_end_date { @end_date }"></date-range>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-download"></i>
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+<script src=/static/ecs_web_kit/js/chunk-vendors.0e212836.js> </script> <script
+  src=/static/ecs_web_kit/js/app.bd10cbdb.js> </script>

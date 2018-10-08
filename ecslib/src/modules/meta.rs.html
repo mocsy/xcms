@@ -1,0 +1,14 @@
+@use crate::modules::meta::Meta;
+@(meta: &Meta)
+<meta charset="@meta.charset">
+<meta name="viewport" content="@meta.viewport">
+@for ln in meta.stylesheet.values() {
+    @Html(ln)
+}
+@for ln in meta.local_css.values() {
+    @Html(ln)
+}
+@for ln in &meta.scripts {
+    @Html(ln.as_html())
+}
+<title>@meta.title</title>

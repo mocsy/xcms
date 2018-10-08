@@ -1,0 +1,67 @@
+@use crate::modules::project::data::Project;
+@use crate::modules::project::todo::Todo;
+
+@(data: &[Todo], project: &Project)
+
+<div class="panel panel-default">
+  <h4>@project.title @if let Some(sdate) = &project.start_date { @sdate }</h4>
+  <div class="panel-heading d-inline">Todo Completion</div>
+  <div class="d-inline" id="todocounter"></div>
+
+  <input class="form-control" id="searchthis" type="text" placeholder="Search.." onkeyup="textTyped()">
+  <ul class="list-group">
+    @for todo_item in data {
+    <li class="list-group-item flex-column searchable">
+      <div class="row align-items-center justify-content-between">
+        <div class="flex-shrink-1">
+          <b>@todo_item.title</b><br>
+          @if let Some(email) = &todo_item.email { @email }<br>
+          @if let Some(phone) = &todo_item.phone { @phone }<br>
+          @if let Some(cmt) = &todo_item.description { @cmt }
+        </div>
+        <div class="flex-shrink-1">
+          <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#deleteModal-@todo_item.id">
+            <i class="fa fa-dumpster"></i>
+          </button>
+          <a class="btn btn-outline-info" href="todo/@todo_item.id" role="button">
+            <i class="fa fa-screwdriver"></i>
+          </a>
+        </div>
+        <div class="material-switch">
+          <input id=@format!("switch{}",todo_item.id) name="@format!(" switch{}",todo_item.id)" type="checkbox"
+            onclick="checkboxClicked(@todo_item.id)" @if todo_item.completed { checked } />
+          <label for=@format!("switch{}",todo_item.id)></label>
+        </div>
+      </div>
+    </li>
+    }
+  </ul>
+  <!-- Modal -->
+  @for todo_item in data {
+  <div class="modal fade" id="deleteModal-@todo_item.id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <b>@todo_item.title</b><br>
+          @if let Some(email) = &todo_item.email { @email }<br>
+          @if let Some(phone) = &todo_item.phone { @phone }<br>
+          @if let Some(cmt) = &todo_item.description { @cmt }
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a class="btn btn-outline-danger" href="todo/@todo_item.id/delete" role="button">
+            Delete todo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

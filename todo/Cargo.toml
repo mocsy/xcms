@@ -1,0 +1,34 @@
+[package]
+name = "todo"
+version = "0.2.3"
+authors = ["Andras Mocsary <nobody@reedwolf.com>"]
+edition = "2018"
+
+[dependencies]
+actix-web = { version = "0.7.19", features = ["rust-tls"] }
+actix-web-httpauth = "0.1.0"
+dotenv = "0.13.0"
+actix = "0.7.9"
+log = "0.4.6"
+pretty_env_logger = "0.3.0"
+rustls = { version = "0.14", optional = true }
+actix-diesel-actor = "0.1.2"
+ecslib = { path = "../ecslib" }
+
+[dependencies.diesel]
+version = "1.4.2"
+features = ["postgres","r2d2","uuid","chrono","serde_json"]
+
+[dependencies.uuid]
+version = "0.6.5"
+features = ["serde","v4"]
+
+[dependencies.chrono]
+version = "0.4.6"
+features = ["serde"]
+
+[features]
+# no features by default
+default = []
+https = ["rustls"]
+

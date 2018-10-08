@@ -1,0 +1,45 @@
+
+.nav-sidebar .nav-link {
+    border-left: 3px solid transparent;
+}
+
+.nav-sidebar .nav-link.active, .nav-sidebar .nav-link:hover, .nav-sidebar .nav-link:focus {
+    background-color: var(--secondary);
+    border-left-color: var(--primary);
+}
+
+.navbar-toggler-icon:hover {
+    color: var(--light);
+}
+
+.nav-sidebar {
+    padding: 0;
+}
+
+.fa {
+    line-height: inherit;
+}
+
+.collapsed .flp {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.nav .nav {
+    padding-left: 16px;
+}
+
+.min-vh-85 {
+    min-height: 85vh !important;
+}
+.min-vh-10 {
+    min-height: 10vh !important;
+}
+
+.minicard {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dee2e6;
+    background-color: var(--light);
+}

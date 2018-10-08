@@ -1,0 +1,44 @@
+@(invite_only: bool)
+
+<form action="register" method="post" class="container col-md-6">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="email" data-l10n-id="email">Email</label>
+            <input type="email" class="form-control" name="email" id="email" data-l10n-id="email_input" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="phone" data-l10n-id="phone">Phone</label>
+            <input type="tel" class="form-control" name="phone" id="phone" data-l10n-id="phone_input" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="fname" data-l10n-id="first_name">First Name</label>
+            <input type="text" class="form-control" name="fname" id="fname" data-l10n-id="first_name_input" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="lname" data-l10n-id="last_name">Last Name</label>
+            <input type="text" class="form-control" name="lname" id="lname" data-l10n-id="last_name_input" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="psw" data-l10n-id="password">Password</label>
+        <input type="password" class="form-control" name="psw" id="psw" data-l10n-id="enter_password_input" required>
+    </div>
+
+    @if invite_only {
+    <div class="form-group">
+        <label for="invite" data-l10n-id="invite_code">Invite code</label>
+        <input type="password" class="form-control" name="invite" id="invite" data-l10n-id="enter_invite_code_input" required>
+    </div>
+    }
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-todoput" type="checkbox" name="completed" id="completed">
+            <label class="form-check-label" for="completed">
+                I have read and accept the policy
+            </label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>

@@ -1,0 +1,19 @@
+@use crate::modules::navigation::Link;
+
+@use super::topbar;
+@use super::sidebar;
+@use super::footer;
+
+@(toplinks: &[Link], links: &[Link], content: &str)
+
+@:topbar(&toplinks)
+<div class="container-fluid">
+<div class="row flex-xl-nowrap">
+@:sidebar(&links)
+<!-- rightbar -->
+<main class="pb-5 pt-2 min-vh-85 col d-sm-inline">
+    @Html(content)
+</main>
+</div>
+@:footer("")
+</div>

@@ -1,0 +1,40 @@
+@use crate::modules::project::data::Project;
+@use crate::modules::project::todo_register::Register;
+
+@(project: &Project, reg: &Register)
+
+<!-- [Role: 'Administer Project @{@} todos', @project.uuid or
+Role: 'Register to Public projects':if project.isPublic] -->
+<h4>@project.title @if let Some(sdate) = &project.start_date { @sdate }</h4>
+<form method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Title" required value="@reg.title">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="@if let Some(email) = &reg.email { @email }">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="phone">Phone</label>
+            <input type="tel" class="form-control" name="phone" id="phone" placeholder="+00-000000000" value="@if let Some(phone) = &reg.phone { @phone }">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" placeholder="Description" rows="3" class="form-control">@if let Some(desc) = &reg.description { @desc }</textarea>
+    </div>
+    <!-- [Role: 'Administer Project @{@} todos', @project.uuid] -->
+    @if reg.email.is_none() && reg.phone.is_none() && reg.title.is_empty()  {
+    <button type="submit" class="btn btn-primary">Register</button>
+    } else {
+    <button type="submit" class="btn btn-primary">Save</button>
+    }
+    <a class="btn btn-outline-primary" href="/project/@project.projectid/todo" role="button">
+        <i class="fa fa-chevron-left"></i>
+        Back
+    </a>
+</form>

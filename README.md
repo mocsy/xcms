@@ -1,45 +1,46 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# An Experimental content server based on ructe templates and actix-web 0.7
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+# Installation
+## I. Setup database using diesel cli and postgreSQL
+### a. Install postgreSQL
+1. https://www.postgresql.org/download/
+2. On windows setup LIB for MSVC see https://msdn.microsoft.com/en-us/library/6y6t9esh.aspx
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+### b. Setup diesel cli
+> cargo install diesel_cli --no-default-features --features "postgres"
 
----
+### c. Create db with diesel
+ ```bash
+ cd ecspg
+ diesel setup --database-url='postgresql://postgres:yourpassword@localhost/ecs'
 
-## Edit a file
+ diesel migration run
+```
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+ Also see https://github.com/diesel-rs/diesel/blob/master/diesel_cli/README.md
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+## II. Setup openSSL for TLS/https
+Acquire an ssl cert.
+### Example Certbot command in user sapce
+> certbot certonly --webroot -w ./ -d ecs.dev.reedwolf.com -d nexus.dev.reedwolf.com --logs-dir certbot/log/ --work-dir certbot/ --config-dir certbot/conf/
 
----
+## III. Add permission for binary to bind on web ports
+> sudo setcap CAP_NET_BIND_SERVICE=+eip /home/deploy_user/ecs_web/ecs 
 
-## Create a file
+## IV. Configuration
+It takes environment variables.
+See .env as example.
 
-Next, you’ll add a new file to this repository.
+## V. Startup
+> ./todo
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+# Build it yourself
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+## Build for release with https
+> cd todo
+> cargo build --release -p todo --features https
 
----
+# Potential additional steps in a cloud environment
 
-## Clone a repository
-
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
-
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
-
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+## Allow postgres connection from new nodes
+https://support.plesk.com/hc/en-us/articles/115003321434-How-to-enable-remote-access-to-PostgreSQL-server-on-a-Plesk-server-
